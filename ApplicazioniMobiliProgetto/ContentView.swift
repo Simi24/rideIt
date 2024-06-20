@@ -8,15 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+    @ObservedObject var motionManager = MotionManager()
+        
+        var body: some View {
+            VStack {
+                Text("Predicted Behavior: \(motionManager.predictedBehavior)")
+                    .padding()
+                
+                Button(action: {
+                    self.motionManager.startUpdates()
+                    print("Start button")
+                }) {
+                    Text("Start")
+                }
+                .padding()
+                
+                Button(action: {
+                    self.motionManager.stopUpdates()
+                }) {
+                    Text("Stop")
+                }
+                .padding()
+            }
         }
-        .padding()
-    }
 }
 
 #Preview {
