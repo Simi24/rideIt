@@ -10,7 +10,7 @@ import CoreMotion
 import CoreML
 
 class MotionManager: ObservableObject {
-    private var motionManager = CMMotionManager()
+    internal var motionManager = CMMotionManager()
     private var timer: Timer?
     
     @Published var accX: [Double] = []
@@ -75,10 +75,9 @@ class MotionManager: ObservableObject {
             }
         }
         
-        // Start a timer to fetch data every 5 seconds
-        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
+        // Start a timer to fetch data every 10 seconds
+        timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
             self.processData()
-            self.updateBuffers()
         }
     }
     
@@ -91,7 +90,6 @@ class MotionManager: ObservableObject {
     }
     
     private func updateBuffers() {
-        // Mantieni solo la metà dei dati (per l'overlap del 50%)
         bufferAccX = Array(bufferAccX.suffix(bufferAccX.count / 2))
         bufferAccY = Array(bufferAccY.suffix(bufferAccY.count / 2))
         bufferAccZ = Array(bufferAccZ.suffix(bufferAccZ.count / 2))
@@ -104,92 +102,94 @@ class MotionManager: ObservableObject {
     }
     
     private func processData() {
-        /*guard bufferAccX.count >= 500, bufferAccY.count >= 500, bufferAccZ.count >= 500,
+        guard bufferAccX.count >= 500, bufferAccY.count >= 500, bufferAccZ.count >= 500,
               bufferGyrX.count >= 500, bufferGyrY.count >= 500, bufferGyrZ.count >= 500,
               bufferMagX.count >= 500, bufferMagY.count >= 500, bufferMagZ.count >= 500 else {
             print("Not enough data")
             return
-        }*/
+        }
         
         print("Start processing ML")
         
-        // Calcola le statistiche (media, mediana, ecc.) qui
-                let statsAccX = calculateStatistics(data: bufferAccX)
-                let statsAccY = calculateStatistics(data: bufferAccY)
-                let statsAccZ = calculateStatistics(data: bufferAccZ)
-                let statsGyrX = calculateStatistics(data: bufferGyrX)
-                let statsGyrY = calculateStatistics(data: bufferGyrY)
-                let statsGyrZ = calculateStatistics(data: bufferGyrZ)
-                let statsMagX = calculateStatistics(data: bufferMagX)
-                let statsMagY = calculateStatistics(data: bufferMagY)
-                let statsMagZ = calculateStatistics(data: bufferMagZ)
-                
-                // Usa i dati processati per fare inferenze con il modello ML
-                do {
-                    let model = try DrivingBehaviorClassifier(configuration: MLModelConfiguration())
-                    let input = DrivingBehaviorClassifierInput(
-                        Acc_X_mean: statsAccX.mean,
-                        Acc_X_median: statsAccY.mean,
-                        Acc_X_std: statsAccZ.mean,
-                        Acc_X_max: statsAccX.median,
-                        Acc_X_min: statsAccY.median,
-                        Acc_Y_mean: statsAccZ.median,
-                        Acc_Y_median: statsAccX.stddev,
-                        Acc_Y_std: statsAccY.stddev,
-                        Acc_Y_max: statsAccZ.stddev,
-                        Acc_Y_min: statsAccX.max,
-                        Acc_Z_mean: statsAccY.max,
-                        Acc_Z_median: statsAccZ.max,
-                        Acc_Z_std: statsAccX.min,
-                        Acc_Z_max: statsAccY.min,
-                        Acc_Z_min: statsAccZ.min,
-                        Gyr_X_mean: statsGyrX.mean,
-                        Gyr_X_median: statsGyrX.median,
-                        Gyr_X_std: statsGyrX.stddev,
-                        Gyr_X_max: statsGyrX.max,
-                        Gyr_X_min: statsGyrX.min,
-                        Gyr_Y_mean: statsGyrY.mean,
-                        Gyr_Y_median: statsGyrY.median,
-                        Gyr_Y_std: statsGyrY.stddev,
-                        Gyr_Y_max: statsGyrY.max,
-                        Gyr_Y_min: statsGyrY.min,
-                        Gyr_Z_mean: statsGyrZ.mean,
-                        Gyr_Z_median: statsGyrZ.median,
-                        Gyr_Z_std: statsGyrZ.stddev,
-                        Gyr_Z_max: statsGyrZ.max,
-                        Gyr_Z_min: statsGyrZ.min,
-                        Mag_X_mean: statsMagX.mean,
-                        Mag_X_median: statsMagX.median,
-                        Mag_X_std: statsMagX.stddev,
-                        Mag_X_max: statsMagX.max,
-                        Mag_X_min: statsMagX.min,
-                        Mag_Y_mean: statsMagY.mean,
-                        Mag_Y_median: statsMagY.median,
-                        Mag_Y_std: statsMagY.stddev,
-                        Mag_Y_max: statsMagY.max,
-                        Mag_Y_min: statsMagY.min,
-                        Mag_Z_mean: statsMagZ.mean,
-                        Mag_Z_median: statsMagZ.median,
-                        Mag_Z_std: statsMagZ.stddev,
-                        Mag_Z_max: statsMagZ.max,
-                        Mag_Z_min: statsMagZ.min
-                    )
-                    let prediction = try model.prediction(input: input)
-                    let categories = ["cruise", "fun", "overtake", "traffic", "wait"]
-                    if let predictedIndex = Int(prediction.classLabel), predictedIndex >= 0 && predictedIndex < categories.count {
-                        DispatchQueue.main.async {
-                            self.predictedBehavior = categories[predictedIndex]
-                        }
-                    } else {
-                        DispatchQueue.main.async {
-                            self.predictedBehavior = "Unknown"
-                        }
-                    }
-                    print("Predicted behavior: \(prediction.classLabel)")
-                    print("Prediction confidence: \(prediction.classProbability)")
-                } catch {
-                    print("Error in prediction: \(error)")
+        let statsAccX = calculateStatistics(data: bufferAccX)
+        let statsAccY = calculateStatistics(data: bufferAccY)
+        let statsAccZ = calculateStatistics(data: bufferAccZ)
+        let statsGyrX = calculateStatistics(data: bufferGyrX)
+        let statsGyrY = calculateStatistics(data: bufferGyrY)
+        let statsGyrZ = calculateStatistics(data: bufferGyrZ)
+        let statsMagX = calculateStatistics(data: bufferMagX)
+        let statsMagY = calculateStatistics(data: bufferMagY)
+        let statsMagZ = calculateStatistics(data: bufferMagZ)
+        
+        do {
+            let model = try DrivingBehaviorClassifier(configuration: MLModelConfiguration())
+            let input = DrivingBehaviorClassifierInput(
+                Acc_X_mean: statsAccX.mean,
+                Acc_X_median: statsAccY.mean,
+                Acc_X_std: statsAccZ.mean,
+                Acc_X_max: statsAccX.median,
+                Acc_X_min: statsAccY.median,
+                Acc_Y_mean: statsAccZ.median,
+                Acc_Y_median: statsAccX.stddev,
+                Acc_Y_std: statsAccY.stddev,
+                Acc_Y_max: statsAccZ.stddev,
+                Acc_Y_min: statsAccX.max,
+                Acc_Z_mean: statsAccY.max,
+                Acc_Z_median: statsAccZ.max,
+                Acc_Z_std: statsAccX.min,
+                Acc_Z_max: statsAccY.min,
+                Acc_Z_min: statsAccZ.min,
+                Gyr_X_mean: statsGyrX.mean,
+                Gyr_X_median: statsGyrX.median,
+                Gyr_X_std: statsGyrX.stddev,
+                Gyr_X_max: statsGyrX.max,
+                Gyr_X_min: statsGyrX.min,
+                Gyr_Y_mean: statsGyrY.mean,
+                Gyr_Y_median: statsGyrY.median,
+                Gyr_Y_std: statsGyrY.stddev,
+                Gyr_Y_max: statsGyrY.max,
+                Gyr_Y_min: statsGyrY.min,
+                Gyr_Z_mean: statsGyrZ.mean,
+                Gyr_Z_median: statsGyrZ.median,
+                Gyr_Z_std: statsGyrZ.stddev,
+                Gyr_Z_max: statsGyrZ.max,
+                Gyr_Z_min: statsGyrZ.min,
+                Mag_X_mean: statsMagX.mean,
+                Mag_X_median: statsMagX.median,
+                Mag_X_std: statsMagX.stddev,
+                Mag_X_max: statsMagX.max,
+                Mag_X_min: statsMagX.min,
+                Mag_Y_mean: statsMagY.mean,
+                Mag_Y_median: statsMagY.median,
+                Mag_Y_std: statsMagY.stddev,
+                Mag_Y_max: statsMagY.max,
+                Mag_Y_min: statsMagY.min,
+                Mag_Z_mean: statsMagZ.mean,
+                Mag_Z_median: statsMagZ.median,
+                Mag_Z_std: statsMagZ.stddev,
+                Mag_Z_max: statsMagZ.max,
+                Mag_Z_min: statsMagZ.min
+            )
+            
+            let prediction = try model.prediction(input: input)
+            let categories = ["cruise", "fun", "overtake", "traffic", "wait"]
+            if let predictedIndex = Int(prediction.classLabel), predictedIndex >= 0 && predictedIndex < categories.count {
+                DispatchQueue.main.async {
+                    self.predictedBehavior = categories[predictedIndex]
                 }
+            } else {
+                DispatchQueue.main.async {
+                    self.predictedBehavior = "Unknown"
+                }
+            }
+            print("Predicted behavior: \(prediction.classLabel)")
+            print("Prediction confidence: \(prediction.classProbability)")
+        } catch {
+            print("Error in prediction: \(error)")
+        }
+        
+        self.updateBuffers()
+        
     }
     
     private func calculateStatistics(data: [Double]) -> (mean: Double, median: Double, stddev: Double, max: Double, min: Double) {
