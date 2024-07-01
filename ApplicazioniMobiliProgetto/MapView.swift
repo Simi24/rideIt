@@ -5,100 +5,124 @@
 //  Created by Simone Paolo Petta on 21/06/24.
 //
 
-import Foundation
-import SwiftUI
 import MapKit
+import SwiftUI
 
 struct MapView: UIViewRepresentable {
-    @EnvironmentObject var locationManager: LocationManager
-    
+    var path: [CLLocationCoordinate2D]
+    var behaviorColors: [UIColor]
+    let requestInterval: TimeInterval = 2.0
+
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         return mapView
     }
-    
+
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        guard !locationManager.recordedPath.isEmpty else { return }
-        
-        // Rimuove tutte le sovrapposizioni esistenti
         uiView.removeOverlays(uiView.overlays)
-        
-        var coordinates = [CLLocationCoordinate2D]()
-        var currentBehavior: String?
-        var currentCoordinates = [CLLocationCoordinate2D]()
-        
-        for (location, behavior, _) in locationManager.recordedPath {
-            if currentBehavior == nil {
-                currentBehavior = behavior
-            }
-            
-            if behavior != currentBehavior {
-                if !currentCoordinates.isEmpty {
-                    let polyline = ColoredPolyline(coordinates: currentCoordinates, count: currentCoordinates.count)
-                    polyline.color = color(for: currentBehavior ?? "unknown")
-                    uiView.addOverlay(polyline)
+        let coordinates = path
+
+        guard coordinates.count > 1 else { return }
+
+        var currentIndex = 0
+
+        func requestNextRoute() {
+            guard currentIndex < coordinates.count - 1 else { return }
+
+            let start = coordinates[currentIndex]
+            let end = coordinates[currentIndex + 1]
+
+            requestRoute(from: start, to: end) { polyline, error in
+                guard let polyline = polyline else {
+                    print("Error getting route: \(String(describing: error))")
+                    return
                 }
-                currentCoordinates.removeAll()
-                currentBehavior = behavior
+                let colorPolyline = ColorPolyline(coordinates: polyline.coordinates, count: polyline.pointCount)
+                colorPolyline.color = behaviorColors[currentIndex]
+                uiView.addOverlay(colorPolyline)
+
+                currentIndex += 1
+                DispatchQueue.main.asyncAfter(deadline: .now() + requestInterval) {
+                    requestNextRoute()
+                }
             }
-            
-            currentCoordinates.append(location.coordinate)
         }
-        
-        if !currentCoordinates.isEmpty {
-            let polyline = ColoredPolyline(coordinates: currentCoordinates, count: currentCoordinates.count)
-            polyline.color = color(for: currentBehavior ?? "unknown")
-            uiView.addOverlay(polyline)
-        }
-        
-        // Centro della mappa sul percorso
-        if let lastCoordinate = currentCoordinates.last {
-            let region = MKCoordinateRegion(center: lastCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+
+        requestNextRoute()
+
+        if let region = makeRegion(for: coordinates) {
             uiView.setRegion(region, animated: true)
         }
     }
-    
+
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    
+
+    func makeRegion(for coordinates: [CLLocationCoordinate2D]) -> MKCoordinateRegion? {
+        guard !coordinates.isEmpty else { return nil }
+
+        let latitudes = coordinates.map { $0.latitude }
+        let longitudes = coordinates.map { $0.longitude }
+
+        let minLat = latitudes.min()!
+        let maxLat = latitudes.max()!
+        let minLon = longitudes.min()!
+        let maxLon = longitudes.max()!
+
+        let center = CLLocationCoordinate2D(latitude: (minLat + maxLat) / 2, longitude: (minLon + maxLon) / 2)
+        let span = MKCoordinateSpan(latitudeDelta: (maxLat - minLat) * 1.2, longitudeDelta: (maxLon - minLon) * 1.2)
+
+        return MKCoordinateRegion(center: center, span: span)
+    }
+
+    func requestRoute(from start: CLLocationCoordinate2D, to end: CLLocationCoordinate2D, completion: @escaping (MKPolyline?, Error?) -> Void) {
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: start))
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: end))
+        request.transportType = .automobile
+
+        let directions = MKDirections(request: request)
+        directions.calculate { response, error in
+            guard let route = response?.routes.first else {
+                print("Error calculating route: \(String(describing: error))")
+                completion(nil, error)
+                return
+            }
+            completion(route.polyline, nil)
+        }
+    }
+
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: MapView
-        
+
         init(_ parent: MapView) {
             self.parent = parent
         }
-        
+
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            if let polyline = overlay as? ColoredPolyline {
-                let renderer = MKPolylineRenderer(polyline: polyline)
-                renderer.strokeColor = polyline.color
-                renderer.lineWidth = 5
-                return renderer
+            guard let polyline = overlay as? ColorPolyline else {
+                return MKOverlayRenderer(overlay: overlay)
             }
-            return MKOverlayRenderer(overlay: overlay)
-        }
-    }
-    
-    private func color(for behavior: String) -> UIColor {
-        switch behavior {
-        case "cruise":
-            return .blue
-        case "fun":
-            return .green
-        case "overtake":
-            return .red
-        case "traffic":
-            return .yellow
-        case "wait":
-            return .gray
-        default:
-            return .black
+
+            let renderer = MKPolylineRenderer(polyline: polyline)
+            renderer.strokeColor = polyline.color
+            renderer.lineWidth = 4
+            return renderer
         }
     }
 }
 
-class ColoredPolyline: MKPolyline {
+class ColorPolyline: MKPolyline {
     var color: UIColor?
 }
+
+extension MKPolyline {
+    var coordinates: [CLLocationCoordinate2D] {
+        var coords = [CLLocationCoordinate2D](repeating: kCLLocationCoordinate2DInvalid, count: pointCount)
+        getCoordinates(&coords, range: NSRange(location: 0, length: pointCount))
+        return coords
+    }
+}
+

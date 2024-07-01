@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D3069312C2F0776000D014C /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3069302C2F0776000D014C /* PersistenceController.swift */; };
+		4D3069332C2F07E1000D014C /* RecordedPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3069322C2F07E1000D014C /* RecordedPath.swift */; };
+		4D3069362C2F1EBD000D014C /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4D3069342C2F1EBD000D014C /* Model.xcdatamodeld */; };
 		4D51E5092C2581B800A3B8DE /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D51E5082C2581B800A3B8DE /* LocationManager.swift */; };
 		4D51E50B2C2581D600A3B8DE /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D51E50A2C2581D600A3B8DE /* MapView.swift */; };
 		4D70B8972C24764A00764336 /* ApplicazioniMobiliProgettoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D70B8962C24764A00764336 /* ApplicazioniMobiliProgettoApp.swift */; };
@@ -18,6 +21,14 @@
 		4D70B8B42C24764C00764336 /* ApplicazioniMobiliProgettoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D70B8B32C24764C00764336 /* ApplicazioniMobiliProgettoUITestsLaunchTests.swift */; };
 		4D70B8C12C24786800764336 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D70B8C02C24786800764336 /* MotionManager.swift */; };
 		4D70B8C32C247ADA00764336 /* DrivingBehaviorClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4D70B8C22C247ADA00764336 /* DrivingBehaviorClassifier.mlmodel */; };
+		4DB400FF2C30172A00CF2E54 /* MiniMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB400FE2C30172A00CF2E54 /* MiniMapView.swift */; };
+		4DB401012C30337200CF2E54 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB401002C30337200CF2E54 /* Log.swift */; };
+		4DB401042C30377A00CF2E54 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB401032C30377A00CF2E54 /* LogView.swift */; };
+		4DB62F942C31977C00CA84E9 /* DrivingClassifierCreateML.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4DB62F932C31977B00CA84E9 /* DrivingClassifierCreateML.mlmodel */; };
+		4DB62F962C31AFE300CA84E9 /* DrivingClassifierCreateMLEuler.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4DB62F952C31AFE300CA84E9 /* DrivingClassifierCreateMLEuler.mlmodel */; };
+		4DD9580B2C32D857009A63C2 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DD9580A2C32D857009A63C2 /* Media.xcassets */; };
+		4DDBC6BE2C2B2A040014EC7D /* PathListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDBC6BD2C2B2A040014EC7D /* PathListView.swift */; };
+		4DDBC6C02C2B34FE0014EC7D /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDBC6BF2C2B34FE0014EC7D /* SummaryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +49,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D3069302C2F0776000D014C /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		4D3069322C2F07E1000D014C /* RecordedPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedPath.swift; sourceTree = "<group>"; };
+		4D3069352C2F1EBD000D014C /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		4D51E5082C2581B800A3B8DE /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		4D51E50A2C2581D600A3B8DE /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		4D70B8932C24764A00764336 /* ApplicazioniMobiliProgetto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApplicazioniMobiliProgetto.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +66,15 @@
 		4D70B8B32C24764C00764336 /* ApplicazioniMobiliProgettoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicazioniMobiliProgettoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4D70B8C02C24786800764336 /* MotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
 		4D70B8C22C247ADA00764336 /* DrivingBehaviorClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = DrivingBehaviorClassifier.mlmodel; path = ../../ApplicazioniMobiliTrainedModel/DrivingBehaviorClassifier.mlmodel; sourceTree = "<group>"; };
+		4DB400FE2C30172A00CF2E54 /* MiniMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniMapView.swift; sourceTree = "<group>"; };
+		4DB401002C30337200CF2E54 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		4DB401022C30368000CF2E54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4DB401032C30377A00CF2E54 /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
+		4DB62F932C31977B00CA84E9 /* DrivingClassifierCreateML.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = DrivingClassifierCreateML.mlmodel; sourceTree = "<group>"; };
+		4DB62F952C31AFE300CA84E9 /* DrivingClassifierCreateMLEuler.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = DrivingClassifierCreateMLEuler.mlmodel; sourceTree = "<group>"; };
+		4DD9580A2C32D857009A63C2 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		4DDBC6BD2C2B2A040014EC7D /* PathListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathListView.swift; sourceTree = "<group>"; };
+		4DDBC6BF2C2B34FE0014EC7D /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,14 +125,26 @@
 		4D70B8952C24764A00764336 /* ApplicazioniMobiliProgetto */ = {
 			isa = PBXGroup;
 			children = (
+				4DB401022C30368000CF2E54 /* Info.plist */,
 				4D70B8962C24764A00764336 /* ApplicazioniMobiliProgettoApp.swift */,
 				4D70B8982C24764A00764336 /* ContentView.swift */,
 				4D70B89A2C24764C00764336 /* Assets.xcassets */,
 				4D70B8C22C247ADA00764336 /* DrivingBehaviorClassifier.mlmodel */,
+				4DB62F932C31977B00CA84E9 /* DrivingClassifierCreateML.mlmodel */,
+				4DB62F952C31AFE300CA84E9 /* DrivingClassifierCreateMLEuler.mlmodel */,
 				4D70B89C2C24764C00764336 /* Preview Content */,
 				4D70B8C02C24786800764336 /* MotionManager.swift */,
 				4D51E5082C2581B800A3B8DE /* LocationManager.swift */,
 				4D51E50A2C2581D600A3B8DE /* MapView.swift */,
+				4DDBC6BD2C2B2A040014EC7D /* PathListView.swift */,
+				4DDBC6BF2C2B34FE0014EC7D /* SummaryView.swift */,
+				4D3069302C2F0776000D014C /* PersistenceController.swift */,
+				4D3069322C2F07E1000D014C /* RecordedPath.swift */,
+				4D3069342C2F1EBD000D014C /* Model.xcdatamodeld */,
+				4DB400FE2C30172A00CF2E54 /* MiniMapView.swift */,
+				4DB401002C30337200CF2E54 /* Log.swift */,
+				4DB401032C30377A00CF2E54 /* LogView.swift */,
+				4DD9580A2C32D857009A63C2 /* Media.xcassets */,
 			);
 			path = ApplicazioniMobiliProgetto;
 			sourceTree = "<group>";
@@ -244,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D70B89E2C24764C00764336 /* Preview Assets.xcassets in Resources */,
+				4DD9580B2C32D857009A63C2 /* Media.xcassets in Resources */,
 				4D70B89B2C24764C00764336 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,12 +305,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DB62F962C31AFE300CA84E9 /* DrivingClassifierCreateMLEuler.mlmodel in Sources */,
+				4D3069332C2F07E1000D014C /* RecordedPath.swift in Sources */,
+				4D3069312C2F0776000D014C /* PersistenceController.swift in Sources */,
+				4DB401012C30337200CF2E54 /* Log.swift in Sources */,
 				4D70B8992C24764A00764336 /* ContentView.swift in Sources */,
 				4D51E50B2C2581D600A3B8DE /* MapView.swift in Sources */,
+				4DB62F942C31977C00CA84E9 /* DrivingClassifierCreateML.mlmodel in Sources */,
 				4D70B8C12C24786800764336 /* MotionManager.swift in Sources */,
 				4D51E5092C2581B800A3B8DE /* LocationManager.swift in Sources */,
+				4DB400FF2C30172A00CF2E54 /* MiniMapView.swift in Sources */,
+				4DDBC6BE2C2B2A040014EC7D /* PathListView.swift in Sources */,
+				4DDBC6C02C2B34FE0014EC7D /* SummaryView.swift in Sources */,
 				4D70B8972C24764A00764336 /* ApplicazioniMobiliProgettoApp.swift in Sources */,
+				4D3069362C2F1EBD000D014C /* Model.xcdatamodeld in Sources */,
 				4D70B8C32C247ADA00764336 /* DrivingBehaviorClassifier.mlmodel in Sources */,
+				4DB401042C30377A00CF2E54 /* LogView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +487,8 @@
 				DEVELOPMENT_TEAM = CGDNZX6G57;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ApplicazioniMobiliProgetto/Info.plist;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to track your path and behaviors even when the app is in the background.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need your location to track your path and behaviors even when the app is in the background.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to track your path and behaviors.";
@@ -474,6 +522,8 @@
 				DEVELOPMENT_TEAM = CGDNZX6G57;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ApplicazioniMobiliProgetto/Info.plist;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to track your path and behaviors even when the app is in the background.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need your location to track your path and behaviors even when the app is in the background.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to track your path and behaviors.";
@@ -612,6 +662,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4D3069342C2F1EBD000D014C /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4D3069352C2F1EBD000D014C /* Model.xcdatamodel */,
+			);
+			currentVersion = 4D3069352C2F1EBD000D014C /* Model.xcdatamodel */;
+			name = Model.xcdatamodeld;
+			path = /Users/simonepaolopetta/ApplicazioniMobiliProgetto/ApplicazioniMobiliProgetto/Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4D70B88B2C24764A00764336 /* Project object */;
 }
