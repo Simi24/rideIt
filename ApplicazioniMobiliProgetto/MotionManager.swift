@@ -26,7 +26,7 @@ class MotionManager: ObservableObject {
     
     @Published var predictedBehavior: String = "Unknown"
     
-    // Buffer per i dati
+    // Buffer for data
     private var bufferAccX: [Double] = []
     private var bufferAccY: [Double] = []
     private var bufferAccZ: [Double] = []
