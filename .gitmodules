@@ -1,0 +1,3 @@
+[submodule "rideItML"]
+	path = rideItML
+	url = https://github.com/Simi24/rideItML.git
