@@ -3,6 +3,10 @@
 
 An iOS app that records inertial and location data from a rider's iPhone and classifies riding/driving behaviour using Core ML models. This repository contains the iOS app, exported Core ML models, and the training scripts and datasets used to build those models.
 
+
+https://github.com/user-attachments/assets/febb9f44-d62f-4d15-92a9-4acea39b950b
+
+
 ## Quick summary
 
 - Purpose: record IMU (accelerometer/gyroscope) and GPS traces while biking and classify segments into behaviour classes (e.g., normal ride, overtake, waiting, etc.).
